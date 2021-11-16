@@ -1,2 +1,0 @@
-javac -cp ".:ansi_terminal.jar" *.java
-
