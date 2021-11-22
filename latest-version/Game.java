@@ -14,7 +14,7 @@ public class Game {
 	private Map theMap;
 	private Player p;
 	//private Enemy e1;
-	private Enemy e2;
+	//private Enemy e2;
 	//private Item groundItem1;
 
 // instantiates all entities that will be present in the game
@@ -24,9 +24,9 @@ public class Game {
 		p.setLocX(1);
 		p.setLocY(1);
 		//e1 = new Enemy("Katniss", 100, 10, 6, 5);
-		e2 = new Enemy("President Snow", 200, 15, 2, 7);
+		//e2 = new Enemy("President Snow", 200, 15, 2, 7);
 		//e1.setAlive(false);
-		e2.setAlive(false);
+		//e2.setAlive(false);
 		//groundItem1 = new Item(ItemType.Other, "Test", 0, 0, 0, 7, 7);
 		p.getInv().add(new Item(ItemType.Weapon, "Bow", 5, 5, 10, -1, -1));
 		p.getInv().add(new Item(ItemType.Armor, "Leather Chestplate", 3, 5, 3, -1, -1));
@@ -243,17 +243,41 @@ and then updates the world and entities accordingly */
 
 	public void saveGame() {
 		PrintWriter out = null;
+		PrintWriter outpf = null;
+		PrintWriter outr1 = null;
+		PrintWriter outr2 = null;
+		PrintWriter outr3 = null;
 
 	try {
-		File f = new File("save.txt");
-		out = new PrintWriter(f);
+		File i = new File("inventory.txt");
+		File pf = new File("player.txt");
+		File r1 = new File("room1.txt");
+		File r2 = new File("room2.txt");
+		File r3 = new File("room3.txt");
+
+		out = new PrintWriter(i);
+		outpf = new PrintWriter(pf);
+		outr1 = new PrintWriter(r1);
+		outr2 = new PrintWriter(r2);
+		outr3 = new PrintWriter(r3);
+
 	} catch (FileNotFoundException e) {
 		System.out.println("File not found. ");	
 	}
+
 	p.getInv().save(out);
-
-
 	out.close();
+
+		
+	p.save(outpf);
+	outpf.close();
+
+	//theMap.save(outr1, 1);
+	outr1.close();
+	//theMap.save(outr2, 2);
+	outr2.close();
+	//theMap.save(outr3, 3);
+	outr3.close();
 
 	}
 
