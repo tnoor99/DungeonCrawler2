@@ -13,24 +13,21 @@ public class Game {
 
 	private Map theMap;
 	private Player p;
-	private Enemy e1;
+	//private Enemy e1;
 	private Enemy e2;
 	//private Item groundItem1;
-	private ArrayList<Item> groundItems;
 
 // instantiates all entities that will be present in the game
 	public Game(String name) {
 		theMap = new Map();
 		p = new Player(name);
-		p.setLocX(3);
-		p.setLocY(3);
-		e1 = new Enemy("Katniss", 100, 10, 4, 7);
-		e2 = new Enemy("President Snow", 200, 15, 25, 7);
+		p.setLocX(1);
+		p.setLocY(1);
+		//e1 = new Enemy("Katniss", 100, 10, 6, 5);
+		e2 = new Enemy("President Snow", 200, 15, 2, 7);
+		//e1.setAlive(false);
+		e2.setAlive(false);
 		//groundItem1 = new Item(ItemType.Other, "Test", 0, 0, 0, 7, 7);
-		groundItems = new ArrayList<Item>();
-		groundItems.add(new Item(ItemType.Weapon, "Rock", 10, 1, 2, 7, 7));
-		groundItems.add(new Item(ItemType.Armor, "Steel Helmet", 7, 5, 9, 20, 10));
-		groundItems.add(new Item(ItemType.Other, "Mockingjay Pin", 1, 20, 0, 17, 16));
 		p.getInv().add(new Item(ItemType.Weapon, "Bow", 5, 5, 10, -1, -1));
 		p.getInv().add(new Item(ItemType.Armor, "Leather Chestplate", 3, 5, 3, -1, -1));
 		p.getInv().setEquippedWeapon(p.getInv().getItems().get(0));
@@ -47,17 +44,9 @@ and then updates the world and entities accordingly */
 		int move = 0;
 		printCommands();
 		while (running) {
-			moveEnemy(e1);
-			moveEnemy(e2);
-			if (p.getLocX() == e1.getLocX() && p.getLocY() == e1.getLocY()) { // if p and e1 on same spot
-				Battle b = new Battle();
-				b.startBattle(p, e1);
-				continue;
-			} else if (p.getLocX() == e2.getLocX() && p.getLocY() == e2.getLocY()) { // if p and e2 on same spot
-				Battle b = new Battle();
-				b.startBattle(p, e2);
-				continue;
-			}
+			moveEnemies(theMap.getCurrentRoom().getEnemies());
+
+			battleChecker(theMap.getCurrentRoom().getEnemies(), p.getLocX(), p.getLocY());
 
 			this.printWorld();
 
@@ -68,75 +57,36 @@ and then updates the world and entities accordingly */
 					Terminal.cookedMode();
 					System.exit(1);
 				case UP: // move up
-					move = p.getLocY();
-					if (Character.toString(theMap.getGrid().get(move-1).charAt(p.getLocX())).equals("%")) break; // blocks walking through wall
-					if (p.getLocX() == e1.getLocX() && (move-1) == e1.getLocY()) { // if walk into e1
-						//start battle with e1
-						Battle b = new Battle();
-						b.startBattle(p, e1);
+					move = p.getLocY() - 1;
+					if (Character.toString(theMap.getCurrentRoom().getGrid().get(move).charAt(p.getLocX())).equals("%")) break; // blocks walking through wall
+					if (battleChecker(theMap.getCurrentRoom().getEnemies(), p.getLocX(), move)) {
 						break;
 					}
-					if (p.getLocX() == e2.getLocX() && (move-1) == e2.getLocY()) { // if walk into e2
-						//start battle with e2
-						Battle b = new Battle();
-						b.startBattle(p, e2);
-						break;
-					}
-					p.setLocY(move-1);
+					p.setLocY(move);
 					break;
 				case DOWN: // move down
-					move = p.getLocY();
-					if (Character.toString(theMap.getGrid().get(move+1).charAt(p.getLocX())).equals("%")) break; // blocks walking through wall
-					if (p.getLocX() == e1.getLocX() && (move+1) == e1.getLocY()) { // if walk into e1
-						//start battle with e1
-						Battle b = new Battle();
-						b.startBattle(p, e1);
+					move = p.getLocY() + 1;
+					if (Character.toString(theMap.getCurrentRoom().getGrid().get(move).charAt(p.getLocX())).equals("%")) break; // blocks walking through wall
+					if (battleChecker(theMap.getCurrentRoom().getEnemies(), p.getLocX(), move)) {
 						break;
 					}
-					if (p.getLocX() == e2.getLocX() && (move+1) == e2.getLocY()) { // if walk into e2
-						//start battle with e2
-						Battle b = new Battle();
-						b.startBattle(p, e2);
-						break;
-					}
-	
-					p.setLocY(move+1);
+					p.setLocY(move);
 					break;
 				case LEFT: // move left
-					move = p.getLocX();
-					if (Character.toString(theMap.getGrid().get(p.getLocY()).charAt(move-1)).equals("%")) break; // blocks walking through wall
-					if ((move-1) == e1.getLocX() && p.getLocY() == e1.getLocY()) { // if walk into e1
-						//start battle with e1
-						Battle b = new Battle();
-						b.startBattle(p, e1);
+					move = p.getLocX() - 1;
+					if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(move)).equals("%")) break; // blocks walking through wall	
+					if (battleChecker(theMap.getCurrentRoom().getEnemies(), move, p.getLocY())) {
 						break;
 					}
-					if ((move-1) == e2.getLocX() && p.getLocY() == e2.getLocY()) { // if walk into e2
-						//start battle with e2
-						Battle b = new Battle();
-						b.startBattle(p, e2);
-						break;
-					}
-	
-					p.setLocX(move-1);
+					p.setLocX(move);
 					break;
 				case RIGHT: // move right
-					move = p.getLocX();
-					if ((move+1) == e1.getLocX() && p.getLocY() == e1.getLocY()) { // if walk into e1
-						//start battle with e1
-						Battle b = new Battle();
-						b.startBattle(p, e1);
+					move = p.getLocX() + 1;	
+					if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(move)).equals("%")) break; // blocks walking through wall
+					if (battleChecker(theMap.getCurrentRoom().getEnemies(), move, p.getLocY())) {
 						break;
 					}
-					if ((move+1) == e2.getLocX() && p.getLocY() == e2.getLocY()) { // if walk into e2
-						//start battle with e2
-						Battle b = new Battle();
-						b.startBattle(p, e2);
-						break;
-					}
-	
-					if (Character.toString(theMap.getGrid().get(p.getLocY()).charAt(move+1)).equals("%")) break; // blocks walking through wall
-					p.setLocX(move+1);
+					p.setLocX(move);
 					break;
 				case FORWARDSLASH: // view commands
 					this.printCommands();
@@ -144,7 +94,7 @@ and then updates the world and entities accordingly */
 				case p: // inspect weapon below and pick it up if player wants
 					String pickUp = "";
 					int count = -1;
-					for (Item i : groundItems) {
+					for (Item i : theMap.getCurrentRoom().getGroundItems()) {
 						count++;
 						if (p.getLocX() == i.getLocX() && p.getLocY() == i.getLocY()) {
 							Terminal.clear();
@@ -154,7 +104,7 @@ and then updates the world and entities accordingly */
 							if (pickUp.equals("y") || pickUp.equals("Y")) {
 								if (p.getInv().add(i)) {
 									System.out.print("\n\n\rYou picked up the item.");
-									groundItems.remove(count);
+									theMap.getCurrentRoom().getGroundItems().remove(count);
 									break;
 								} else {
 									System.out.print("\n\n\rThe item was too heavy to pick up.");
@@ -185,6 +135,16 @@ and then updates the world and entities accordingly */
 					loadGame();
 					break;
 
+				case w:
+					if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("1")) {
+						theMap.setCurrentRoom(0);
+					} else if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("2")) {
+						theMap.setCurrentRoom(1);
+					} else if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("3")) {
+						theMap.setCurrentRoom(2);
+					}
+					break;
+
 
 			}
 			
@@ -198,17 +158,17 @@ and then updates the world and entities accordingly */
 		Terminal.clear();
 		char pixel;
 		boolean printGround;
-		for (int y = 0; y < theMap.getGrid().size(); y++) {
-			for (int x = 0; x < theMap.getGrid().get(y).length(); x++) {
+		for (int y = 0; y < theMap.getCurrentRoom().getGrid().size(); y++) {
+			for (int x = 0; x < theMap.getCurrentRoom().getGrid().get(y).length(); x++) {
 				printGround = true;
 				if (x == p.getLocX() && y == p.getLocY()) { // print player
 					System.out.print("@");
 					printGround = false;
-				} else if ((x == e1.getLocX() && y == e1.getLocY()) || (x == e2.getLocX() && y == e2.getLocY())) { // print enemies
+				} else if (isEnemyHere(theMap.getCurrentRoom().getEnemies(), x, y)) { // print enemies
 					System.out.print("X");
 					printGround = false;
-				} else if (groundItems.size() > 0) { // print items
-					for (Item i : groundItems) {
+				} else if (theMap.getCurrentRoom().getGroundItems().size() > 0) { // print items
+					for (Item i : theMap.getCurrentRoom().getGroundItems()) {
 						if (x == i.getLocX() && y == i.getLocY()) {
 							System.out.print("?");
 							printGround = false;
@@ -216,7 +176,7 @@ and then updates the world and entities accordingly */
 					}
 				}
 				if (printGround) { // print map
-					pixel = theMap.getGrid().get(y).charAt(x);
+					pixel = theMap.getCurrentRoom().getGrid().get(y).charAt(x);
 					System.out.print(pixel);
 				}
 			}
@@ -247,34 +207,37 @@ and then updates the world and entities accordingly */
 	}
 
 // updates the positions of all living enemies - enemy movement is determined by a random number generator
-	public void moveEnemy(Enemy e) {
+	public void moveEnemies(ArrayList<Enemy> enemies) {
 		Random rand = new Random();
 		int dir = rand.nextInt(4);
 		int move;
-		if (e.getAlive()) {
-			if (dir == 0) {
-				move = e.getLocY()-1;
-				if (!(Character.toString(theMap.getGrid().get(move).charAt(e.getLocX())).equals("%"))) { // blocks walking through wall
-					e.setLocY(move);
-				}
-			} else if (dir == 1) {
-				move = e.getLocY()+1;
-				if (!(Character.toString(theMap.getGrid().get(move).charAt(e.getLocX())).equals("%"))) { // blocks walking through wall
-					e.setLocY(move);
-				}
-			} else if (dir == 2) {
-				move = e.getLocX()-1;
-				if (!(Character.toString(theMap.getGrid().get(e.getLocY()).charAt(move)).equals("%"))) { // blocks walking through wall
-					e.setLocX(move);
-				}
-			} else {
-				move = e.getLocX()+1;
-				if (!(Character.toString(theMap.getGrid().get(e.getLocY()).charAt(move)).equals("%"))) { // blocks walking through wall
-					e.setLocX(move);
+		for (Enemy e : enemies) {
+			if (e.getAlive()) {
+				if (dir == 0) {
+					move = e.getLocY()-1;
+					if (!(Character.toString(theMap.getCurrentRoom().getGrid().get(move).charAt(e.getLocX())).equals("%"))) { // blocks walking through wall
+						e.setLocY(move);
+					}
+				} else if (dir == 1) {
+					move = e.getLocY()+1;
+					if (!(Character.toString(theMap.getCurrentRoom().getGrid().get(move).charAt(e.getLocX())).equals("%"))) { // blocks walking through wall
+						e.setLocY(move);
+					}
+				} else if (dir == 2) {
+					move = e.getLocX()-1;
+					if (!(Character.toString(theMap.getCurrentRoom().getGrid().get(e.getLocY()).charAt(move)).equals("%"))) { // blocks walking through wall
+						e.setLocX(move);
+					}
+				} else {
+					move = e.getLocX()+1;
+					if (!(Character.toString(theMap.getCurrentRoom().getGrid().get(e.getLocY()).charAt(move)).equals("%"))) { // blocks walking through wall
+						e.setLocX(move);
+					}
 				}
 			}
 		}
 	}
+
 
 
 
@@ -311,6 +274,28 @@ and then updates the world and entities accordingly */
 	}
 
 
+
+
+
+	public Boolean battleChecker(ArrayList<Enemy> enemies, int locX, int locY) {
+		Battle b = new Battle();
+		for (Enemy e : enemies) {
+			if (locX == e.getLocX() && locY == e.getLocY()) {
+				b.startBattle(p, e);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Boolean isEnemyHere(ArrayList<Enemy> enemies, int locX, int locY) {
+		for (Enemy e : enemies) {
+			if (locX == e.getLocX() && locY == e.getLocY()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 }

@@ -2,6 +2,38 @@ import java.util.ArrayList;
 
 // this class store the map that the player, enemies, and items will be located on
 
+// new map class.
+public class Map {
+
+	private ArrayList<Room> rooms;
+	private Room currentRoom;
+
+	public Map() {
+		rooms = new ArrayList<Room>();
+		rooms.add(new Room(1));
+		rooms.add(new Room(2));
+		rooms.add(new Room(3));
+		currentRoom = rooms.get(0);
+	}
+
+	public Room getRoom(int roomNum) {
+		return rooms.get(roomNum);
+	}
+	
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
+
+	public void setCurrentRoom(int r) {
+		currentRoom = rooms.get(r);
+	}
+
+}
+
+
+
+// below is the old map class
+/*
 public class Map {
 	
 	private ArrayList<String> grid;
@@ -34,3 +66,4 @@ public class Map {
 	}
 
 }
+*/
