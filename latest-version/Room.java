@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.PrintWriter;
 
 public class Room {
 
@@ -11,6 +12,18 @@ public class Room {
 		this.enemies = getEnemiesType(type);
 		this.groundItems = getGroundItemsType(type);
 	}
+
+	public void save(PrintWriter out, int currentRoom) {
+		out.println(currentRoom);
+		for (Item i : groundItems) {
+			i.save(out);
+		};
+		out.println("!!!");
+		for (Enemy e : enemies) {
+			e.save(out);
+		}
+		out.println("!!!");
+	    }
 
 	public ArrayList<String> getGrid() {
 		return grid;

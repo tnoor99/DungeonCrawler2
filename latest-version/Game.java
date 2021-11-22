@@ -272,11 +272,11 @@ and then updates the world and entities accordingly */
 	p.save(outpf);
 	outpf.close();
 
-	//theMap.save(outr1, 1);
+	theMap.save(outr1, 1);
 	outr1.close();
-	//theMap.save(outr2, 2);
+	theMap.save(outr2, 2);
 	outr2.close();
-	//theMap.save(outr3, 3);
+	theMap.save(outr3, 3);
 	outr3.close();
 
 	}

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.PrintWriter;
 
 // this class store the map that the player, enemies, and items will be located on
 
@@ -6,14 +7,18 @@ import java.util.ArrayList;
 public class Map {
 
 	private ArrayList<Room> rooms;
-	private Room currentRoom;
+	private int currentRoom;
 
 	public Map() {
 		rooms = new ArrayList<Room>();
 		rooms.add(new Room(1));
 		rooms.add(new Room(2));
 		rooms.add(new Room(3));
-		currentRoom = rooms.get(0);
+		currentRoom = 0;
+	}
+	
+	public void save(PrintWriter out, int r) {
+		rooms.get(r-1).save(out, currentRoom);
 	}
 
 	public Room getRoom(int roomNum) {
@@ -21,11 +26,11 @@ public class Map {
 	}
 	
 	public Room getCurrentRoom() {
-		return currentRoom;
+		return rooms.get(currentRoom);
 	}
 
 	public void setCurrentRoom(int r) {
-		currentRoom = rooms.get(r);
+		currentRoom = r;
 	}
 
 }
