@@ -1,4 +1,6 @@
 //for each enemy, this class gives the enemy a name, a health status, the value of it's equipped item, sets it to true so it's alive, and sets it's location with x & y coordinates
+import java.util.Scanner;
+import java.io.PrintWriter;
 public class Enemy {
 	private String name;
 	private int health;
@@ -15,6 +17,22 @@ public class Enemy {
 		this.alive = true;
 		this.locX = x;
 		this.locY = y;
+	}
+
+	//load constructor
+	public Enemy(Scanner in) {
+		name = in.nextLine();
+		in.nextLine();
+		health = in.nextInt();
+		in.nextLine();
+		damage = in.nextInt();
+		in.nextLine();
+		alive = in.nextBoolean();
+		in.nextLine();
+		locX = in.nextInt();
+		in.nextLine();
+		locY = in.nextInt();
+
 	}
 	
 	//this returns the enemy's name
@@ -65,6 +83,15 @@ public class Enemy {
 	//this sets the y coordinate of the enemy
     	public void setLocY(int newLocY) {
 		this.locY = newLocY;
+	}
+
+	public void save(PrintWriter out) {
+		out.println(name);
+		out.println(health);
+		out.println(damage);
+		out.println(alive);
+		out.println(locX);
+		out.println(locY);
 	}
 
 }

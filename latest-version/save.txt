@@ -1,0 +1,29 @@
+100
+Weapon
+Bow
+5
+5
+10
+-1
+-1
+Armor
+Leather Chestplate
+3
+5
+3
+-1
+-1
+Weapon
+Bow
+5
+5
+10
+-1
+-1
+Armor
+Leather Chestplate
+3
+5
+3
+-1
+-1

@@ -1,6 +1,10 @@
 import ansi_terminal.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /* This class handles the major functions of the game, such as creating entities and updating their locations,
 handling player input, printing the map, printing commands. */
@@ -174,6 +178,13 @@ and then updates the world and entities accordingly */
 						p.getInv().equipArmor();
 					}
 					break;
+				case s: // save game
+					saveGame();
+					break;
+				case l: // load game
+					loadGame();
+					break;
+
 
 			}
 			
@@ -229,6 +240,8 @@ and then updates the world and entities accordingly */
 		System.out.print("P : inspect an item beneath you\n\r");
 		System.out.print("ESC : quit game\n\r");
 		System.out.print("C : change equipped weapon or armor\n\n\r");
+		System.out.print("S : save the game\n\n\r");
+		System.out.print("L : load the game\n\n\r");
 
 		Terminal.getLine("Hit enter to continue... >");
 	}
@@ -262,5 +275,42 @@ and then updates the world and entities accordingly */
 			}
 		}
 	}
+
+
+
+	public void saveGame() {
+		PrintWriter out = null;
+
+	try {
+		File f = new File("save.txt");
+		out = new PrintWriter(f);
+	} catch (FileNotFoundException e) {
+		System.out.println("File not found. ");	
+	}
+	p.getInv().save(out);
+
+
+	out.close();
+
+	}
+
+
+	public void loadGame() {
+		Scanner in = null;
+
+	try { 
+		File f = new File("save.txt");
+		in = new Scanner(f);
+	} catch (FileNotFoundException e) {
+		System.out.println("File not found. ");
+	}
+	//Player p = new Player(in);
+	//Player p.getInv() = new Player p.getInv(in);
+
+
+	}
+
+
+
 
 }

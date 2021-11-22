@@ -1,5 +1,8 @@
 
 //for every player created in both Game.java and Main.java, it takes a string name as a parameter, creates a new personal inventory for said player, sets its inital state to be alive (true), and initializes its health to 100.
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Player {
     private String name;
     private int health;
@@ -16,6 +19,27 @@ public class Player {
 	this.alive = true;
 	this.health = 100;
     }
+
+    //load in constructor
+    public Player(Scanner in) {
+	name = in.nextLine();
+	in.nextLine();
+	health = in.nextInt();
+	in.nextLine();
+	damage = in.nextInt();
+	in.nextLine();
+	armor = in.nextInt();
+	in.nextLine();
+	playerInventory = new Inventory(in);
+	in.nextLine();
+	alive = in.nextBoolean();
+	in.nextLine();
+	locX = in.nextInt();
+	in.nextLine();
+	locY = in.nextInt();
+
+    }
+
 
     //returns player's name
     public String getName() {
@@ -85,6 +109,17 @@ public class Player {
     //sets player's y coordinate
     public void setLocY(int newLocY) {
         this.locY = newLocY;
+    }
+
+    public void save(PrintWriter out) {
+	    out.println(name);
+	    out.println(health);
+	    out.println(damage);
+	    out.println(armor);
+	    playerInventory.save(out);
+	    out.println(alive);
+	    out.println(locX);
+	    out.println(locY);
     }
 
 }

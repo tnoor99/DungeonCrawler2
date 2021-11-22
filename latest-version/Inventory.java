@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import ansi_terminal.*;
+import java.io.PrintWriter;
 
 /* This class will house an ArrayList of Items, as well as a series of methods for altering the state of this ArrayList. Other methods include
    a method to print the contents of the ArrayList in an easily readable format, and equip methods to equip specific item types.*/
@@ -13,10 +14,24 @@ class Inventory {
 	private Item equippedArmor;
 	private Scanner scnr = new Scanner(System.in);
 	private Scanner enterScnr = new Scanner(System.in);
+	private Scanner in = new Scanner(System.in);
 
 	// Constructs an Inventory with a given weight limit.
 	public Inventory(int maxWeight) {
 		this.maxWeight = maxWeight;
+	}
+
+	public Inventory(Scanner in) {
+		maxWeight = in.nextInt();
+		in.nextLine();
+		equippedWeapon = new Item(in);
+		in.nextLine();
+		equippedArmor = new Item(in);
+		in.nextLine();
+		while (in.hasNextLine()) {
+			items.add(new Item(in));
+		}
+		in.close();
 	}
 
 	/* Checks if a given item being added would excede weight limit. If so, item will not be added and the method will return false.
@@ -146,6 +161,18 @@ the specified Item */
 // returns list of items in inventory
 	public ArrayList<Item> getItems() {
 		return this.items;
+	}
+
+	public void save(PrintWriter out) {
+	
+		out.println(maxWeight);
+		equippedWeapon.save(out);
+		equippedArmor.save(out);
+		for (Item i : items) {
+			i.save(out);
+			
+		}
+
 	}
 
 }
