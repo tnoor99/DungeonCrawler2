@@ -29,7 +29,7 @@ public class Item {
 // Load constructor for Item class
 	public Item(Scanner in) {
 	
-		ItemType type = ItemType.valueOf(in.nextLine());
+		type = ItemType.valueOf(in.nextLine());
                 name = in.nextLine();
                 weight = in.nextInt();
                 in.nextLine();
@@ -40,6 +40,7 @@ public class Item {
                 locX = in.nextInt();
                 in.nextLine();
                 locY = in.nextInt();
+		in.nextLine();
 	}
 
 // Returns Item's weight
@@ -99,7 +100,7 @@ public class Item {
 	}
 
 
-	public void save(PrintWriter out) {
+	public void save(PrintWriter out, Boolean last) {
 		out.println(type);
 		out.println(name);
 		out.println(weight);
@@ -107,6 +108,11 @@ public class Item {
 		out.println(strength);
 		out.println(locX);
 		out.println(locY);
+		if (last) {
+			out.println("XXXXX");
+		} else {
+			out.println(" ");
+		}
 	}
 
 

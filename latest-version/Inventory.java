@@ -28,8 +28,16 @@ class Inventory {
 		in.nextLine();
 		equippedArmor = new Item(in);
 		in.nextLine();
-		while (in.hasNextLine()) {
-			items.add(new Item(in));
+		
+		Boolean stillRunning = true;
+		String header = "";
+		while (stillRunning) {
+			header = in.nextLine();
+			if (header.equals("XXXXX")) {
+				break;
+			} else {
+				items.add(new Item(in));
+			}
 		}
 		in.close();
 	}
@@ -166,12 +174,20 @@ the specified Item */
 	public void save(PrintWriter out) {
 	
 		out.println(maxWeight);
-		equippedWeapon.save(out);
-		equippedArmor.save(out);
-		for (Item i : items) {
-			i.save(out);
-			
-		}
+		equippedWeapon.save(out, false);
+		equippedArmor.save(out, false);
+
+		if (items.size() > 0) {
+			out.println(" ");
+			for (int i = 0; i < items.size(); i++) {
+				if (i == items.size()-1) {
+					items.get(i).save(out, true);
+				} else {
+					items.get(i).save(out, false);
+				}
+				
+			}
+		} else { out.println(); }
 
 	}
 

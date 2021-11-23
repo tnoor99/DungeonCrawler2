@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class Room {
 
@@ -13,16 +14,57 @@ public class Room {
 		this.groundItems = getGroundItemsType(type);
 	}
 
+	public Room(int type, Scanner in) {
+		this.grid = getGridType(type);
+		this.enemies = new ArrayList<Enemy>();
+		this.groundItems = new ArrayList<Item>(); 
+
+		Boolean stillMore = true;
+		String header = "";
+
+		
+		while (stillMore) {
+			header = in.nextLine();
+			if (header.equals("XXXXX")) {
+				stillMore = false;
+			} else {
+				groundItems.add(new Item(in));
+			}
+		}
+		stillMore = true;
+		while (stillMore) {
+			header = in.nextLine();
+			if (header.equals("XXXXX")) {
+				stillMore = false;
+			} else {
+				enemies.add(new Enemy(in));
+			}
+		}
+	}
+
 	public void save(PrintWriter out, int currentRoom) {
 		out.println(currentRoom);
-		for (Item i : groundItems) {
-			i.save(out);
-		};
-		out.println("!!!");
-		for (Enemy e : enemies) {
-			e.save(out);
-		}
-		out.println("!!!");
+		if (groundItems.size() > 0) {
+			out.println(" ");
+			for (int i = 0; i < groundItems.size(); i++) {
+				if (i == groundItems.size()-1) {
+					groundItems.get(i).save(out, true);
+				} else {
+					groundItems.get(i).save(out, false);
+				}
+			}
+		} else { out.println("XXXXX"); }
+		
+		if (enemies.size() > 0) {
+			out.println(" ");
+			for (int e = 0; e < enemies.size(); e++) {
+				if (e == enemies.size()-1) {
+					enemies.get(e).save(out, true);
+				} else {
+					enemies.get(e).save(out, false);
+				}
+			}
+		} else { out.println("XXXXX"); }
 	    }
 
 	public ArrayList<String> getGrid() {
@@ -106,11 +148,12 @@ public class Room {
 	public ArrayList<Enemy> getEnemiesType(int type) {
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 		if (type == 1) {
-			enemies.add(new Enemy("Type1", 50, 5, 4, 4));
+			enemies.add(new Enemy("eType1", 50, 5, 4, 4));
 		} else if (type == 2) {
-			enemies.add(new Enemy("Type2", 50, 5, 15, 10));
+			enemies.add(new Enemy("eType2", 50, 5, 15, 10));
+			enemies.add(new Enemy("eType2.1", 50, 5, 15, 11));
 		} else {
-			enemies.add(new Enemy("Type3", 50, 5, 10, 7));
+			//enemies.add(new Enemy("eType3", 50, 5, 10, 7));
 		}
 		return enemies;
 	}
@@ -118,11 +161,12 @@ public class Room {
 	public ArrayList<Item> getGroundItemsType(int type) {
 		ArrayList<Item> groundItems = new ArrayList<Item>();
 		if (type == 1) {
-			groundItems.add(new Item(ItemType.Other, "Type1", 0, 0, 0, 7, 2));
+			groundItems.add(new Item(ItemType.Other, "iType1", 0, 0, 0, 7, 2));
 		} else if (type == 2) {
-			groundItems.add(new Item(ItemType.Other, "Type2", 0, 0, 0, 7, 11));
+			groundItems.add(new Item(ItemType.Other, "iType2", 0, 0, 0, 7, 11));
+			groundItems.add(new Item(ItemType.Other, "iType2.1", 0, 0, 0, 7, 12));
 		} else {
-			groundItems.add(new Item(ItemType.Other, "Type3", 0, 0, 0, 17, 7));
+			//groundItems.add(new Item(ItemType.Other, "iType3", 0, 0, 0, 17, 7));
 		}
 		return groundItems;
 	}

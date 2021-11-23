@@ -32,9 +32,8 @@ public class Game {
 		p.getInv().add(new Item(ItemType.Armor, "Leather Chestplate", 3, 5, 3, -1, -1));
 		p.getInv().setEquippedWeapon(p.getInv().getItems().get(0));
 		p.getInv().setEquippedArmor(p.getInv().getItems().get(1));
-
-
 	}
+
 
 /* startGame is where the game loop is, which prints the current world along with it's entities, waits for player input,
 and then updates the world and entities accordingly */
@@ -198,10 +197,11 @@ and then updates the world and entities accordingly */
 		System.out.print("RIGHT ARROW : move right\n\r");
 		System.out.print("I : view inventory\n\r");
 		System.out.print("P : inspect an item beneath you\n\r");
-		System.out.print("ESC : quit game\n\r");
-		System.out.print("C : change equipped weapon or armor\n\n\r");
-		System.out.print("S : save the game\n\n\r");
-		System.out.print("L : load the game\n\n\r");
+		System.out.print("C : change equipped weapon or armor\n\r");
+		System.out.print("W : take the warp you are standing on\n\r");
+		System.out.print("S : save the game\n\r");
+		System.out.print("L : load the save file\n\r");
+		System.out.print("ESC : quit game\n\n\r");
 
 		Terminal.getLine("Hit enter to continue... >");
 	}
@@ -209,9 +209,9 @@ and then updates the world and entities accordingly */
 // updates the positions of all living enemies - enemy movement is determined by a random number generator
 	public void moveEnemies(ArrayList<Enemy> enemies) {
 		Random rand = new Random();
-		int dir = rand.nextInt(4);
 		int move;
 		for (Enemy e : enemies) {
+			int dir = rand.nextInt(4);
 			if (e.getAlive()) {
 				if (dir == 0) {
 					move = e.getLocY()-1;
@@ -242,58 +242,65 @@ and then updates the world and entities accordingly */
 
 
 	public void saveGame() {
-		PrintWriter out = null;
 		PrintWriter outpf = null;
 		PrintWriter outr1 = null;
 		PrintWriter outr2 = null;
 		PrintWriter outr3 = null;
 
-	try {
-		File i = new File("inventory.txt");
-		File pf = new File("player.txt");
-		File r1 = new File("room1.txt");
-		File r2 = new File("room2.txt");
-		File r3 = new File("room3.txt");
+		try {
+			File pf = new File("player.txt");
+			File r1 = new File("room1.txt");
+			File r2 = new File("room2.txt");
+			File r3 = new File("room3.txt");
 
-		out = new PrintWriter(i);
-		outpf = new PrintWriter(pf);
-		outr1 = new PrintWriter(r1);
-		outr2 = new PrintWriter(r2);
-		outr3 = new PrintWriter(r3);
+			outpf = new PrintWriter(pf);
+			outr1 = new PrintWriter(r1);
+			outr2 = new PrintWriter(r2);
+			outr3 = new PrintWriter(r3);
 
-	} catch (FileNotFoundException e) {
-		System.out.println("File not found. ");	
-	}
-
-	p.getInv().save(out);
-	out.close();
-
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found. ");	
+		}
 		
-	p.save(outpf);
-	outpf.close();
+		p.save(outpf);
+		outpf.close();
 
-	theMap.save(outr1, 1);
-	outr1.close();
-	theMap.save(outr2, 2);
-	outr2.close();
-	theMap.save(outr3, 3);
-	outr3.close();
+		theMap.save(outr1, 1);
+		outr1.close();
+		theMap.save(outr2, 2);
+		outr2.close();
+		theMap.save(outr3, 3);
+		outr3.close();
 
 	}
 
 
 	public void loadGame() {
-		Scanner in = null;
+		Scanner inP = null;
+		Scanner inR1 = null;
+		Scanner inR2 = null;
+		Scanner inR3 = null;
 
-	try { 
-		File f = new File("save.txt");
-		in = new Scanner(f);
-	} catch (FileNotFoundException e) {
-		System.out.println("File not found. ");
-	}
-	//Player p = new Player(in);
-	//Player p.getInv() = new Player p.getInv(in);
+		try {
+			File pf = new File("player.txt");
+			File r1 = new File("room1.txt");
+			File r2 = new File("room2.txt");
+			File r3 = new File("room3.txt");
+		
 
+			inP = new Scanner(pf);
+			inR1 = new Scanner(r1);
+			inR2 = new Scanner(r2);
+			inR3 = new Scanner(r3);
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found. ");
+		}
+		
+		theMap = new Map(inR1, inR2, inR3);
+
+		p = new Player(inP);
+	
 
 	}
 

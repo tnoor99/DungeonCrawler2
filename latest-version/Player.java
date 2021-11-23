@@ -21,24 +21,22 @@ public class Player {
     }
 
     //load in constructor
-    public Player(Scanner in) {
-	name = in.nextLine();
-	in.nextLine();
-	health = in.nextInt();
-	in.nextLine();
-	damage = in.nextInt();
-	in.nextLine();
-	armor = in.nextInt();
-	in.nextLine();
-	playerInventory = new Inventory(in);
-	in.nextLine();
-	alive = in.nextBoolean();
-	in.nextLine();
-	locX = in.nextInt();
-	in.nextLine();
-	locY = in.nextInt();
-
-    }
+    	public Player(Scanner in) {
+		name = in.nextLine();
+		health = in.nextInt();
+		in.nextLine();
+		damage = in.nextInt();
+		in.nextLine();
+		armor = in.nextInt();
+		in.nextLine();
+		alive = in.nextBoolean();
+		in.nextLine();
+		locX = in.nextInt();
+		in.nextLine();
+		locY = in.nextInt();
+		in.nextLine();
+		playerInventory = new Inventory(in);
+	}
 
 
     //returns player's name
@@ -116,10 +114,10 @@ public class Player {
 	    out.println(health);
 	    out.println(damage);
 	    out.println(armor);
-	    playerInventory.save(out);
 	    out.println(alive);
 	    out.println(locX);
 	    out.println(locY);
+	    playerInventory.save(out);
     }
 
 }
