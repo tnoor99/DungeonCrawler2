@@ -15,7 +15,7 @@ public class Item {
 	private int locY;
 	private Scanner in = new Scanner(System.in);
 
-// Constructs an Item according to the given parameters
+	// Constructs an Item according to the given parameters
 	public Item(ItemType type, String name, int weight, int value, int strength, int locX, int locY) {
 		this.type = type;
 		this.name = name;
@@ -26,7 +26,7 @@ public class Item {
 		this.locY = locY;
 	}
 
-// Load constructor for Item class
+	// Load constructor for Item class
 	public Item(Scanner in) {
 	
 		type = ItemType.valueOf(in.nextLine());
@@ -43,47 +43,47 @@ public class Item {
 		in.nextLine();
 	}
 
-// Returns Item's weight
+	// Returns Item's weight
 	public int getWeight() {
 		return this.weight;
 	}
 
-// Returns Item's value
+	// Returns Item's value
 	public int getValue() {
 		return this.value;
 	}
 
-// Returns Item's name
+	// Returns Item's name
 	public String getName() {
 		return this.name;
 	}
 
-// Returns Item's type
+	// Returns Item's type
 	public ItemType getType() {
 		return this.type;
 	}
-// returns item's locX
+	// returns item's locX
 	public int getLocX() {
 		return this.locX;
 	}
-// returns item's locY
+	// returns item's locY
 	public int getLocY() {
 		return this.locY;
 	}
-// returns item's strength
+	// returns item's strength
 	public int getStrength() {
 		return this.strength;
 	}
-// sets item's locX
+	// sets item's locX
 	public void setLocX(int newLocX) {
 		this.locX = newLocX;
 	}
-// sets item's locY
+	// sets item's locY
 	public void setLocY(int newLocY) {
 		this.locY = newLocY;
 	}
 
-// Returns a string conisting of the Item's values in an easily readable format
+	// Returns a string conisting of the Item's values in an easily readable format
 	public String toString() {
 		String str = this.name;
 		str += " | " + this.weight;
@@ -99,7 +99,7 @@ public class Item {
 		return str;
 	}
 
-
+	//saves details of an item 
 	public void save(PrintWriter out, Boolean last) {
 		out.println(type);
 		out.println(name);

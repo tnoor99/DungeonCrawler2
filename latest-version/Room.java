@@ -148,10 +148,10 @@ public class Room {
 	public ArrayList<Enemy> getEnemiesType(int type) {
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 		if (type == 1) {
-			enemies.add(new Enemy("eType1", 50, 5, 4, 4));
+			enemies.add(new Enemy("Otmin Minotaur", 70, 15, 4, 4));
 		} else if (type == 2) {
-			enemies.add(new Enemy("eType2", 50, 5, 15, 10));
-			enemies.add(new Enemy("eType2.1", 50, 5, 15, 11));
+			enemies.add(new Enemy("Prince Caspian", 90, 25, 15, 10));
+			enemies.add(new Enemy("The White Witch", 150, 55, 15, 11));
 		} else {
 			//enemies.add(new Enemy("eType3", 50, 5, 10, 7));
 		}
@@ -161,10 +161,10 @@ public class Room {
 	public ArrayList<Item> getGroundItemsType(int type) {
 		ArrayList<Item> groundItems = new ArrayList<Item>();
 		if (type == 1) {
-			groundItems.add(new Item(ItemType.Other, "iType1", 0, 0, 0, 7, 2));
+			groundItems.add(new Item(ItemType.Weapon, "Lucy's dagger", 15, 20, 15, 7, 2));
 		} else if (type == 2) {
-			groundItems.add(new Item(ItemType.Other, "iType2", 0, 0, 0, 7, 11));
-			groundItems.add(new Item(ItemType.Other, "iType2.1", 0, 0, 0, 7, 12));
+			groundItems.add(new Item(ItemType.Weapon, "Seven Swords", 25, 30, 40, 7, 11));
+			groundItems.add(new Item(ItemType.Weapon, "Jadis' Wand", 45, 40, 80, 7, 12));
 		} else {
 			//groundItems.add(new Item(ItemType.Other, "iType3", 0, 0, 0, 17, 7));
 		}

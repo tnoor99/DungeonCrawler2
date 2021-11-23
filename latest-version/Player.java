@@ -20,7 +20,7 @@ public class Player {
 	this.health = 100;
     }
 
-    //load in constructor
+    //load in constructor for player information
     	public Player(Scanner in) {
 		name = in.nextLine();
 		health = in.nextInt();
@@ -109,6 +109,7 @@ public class Player {
         this.locY = newLocY;
     }
 
+    //saves a player's information/stats
     public void save(PrintWriter out) {
 	    out.println(name);
 	    out.println(health);

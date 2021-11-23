@@ -21,6 +21,7 @@ class Inventory {
 		this.maxWeight = maxWeight;
 	}
 
+	//load constructor for a player's inventory items/information
 	public Inventory(Scanner in) {
 		maxWeight = in.nextInt();
 		in.nextLine();
@@ -121,8 +122,8 @@ class Inventory {
 
 	}
 
-/* Prints a list of every Item of ItemType Armor. Prompts the user for which Item they would like to equip, and sets eqquipedArmor to
-the specified Item */
+	/* Prints a list of every Item of ItemType Armor. Prompts the user for which Item they would like to equip, and sets eqquipedArmor to
+	the specified Item */
 	public void equipArmor() {
 		ArrayList<Item> armors = new ArrayList<Item>();
 		for (Item i : items) {
@@ -150,27 +151,28 @@ the specified Item */
 		Terminal.getLine("\nHit enter to continue... >");
 
 	}
-// returns equippedWeapon
+	// returns equippedWeapon
 	public Item getEquippedWeapon() {
 		return this.equippedWeapon;
 	}
-// returns equippedArmor
+	// returns equippedArmor
 	public Item getEquippedArmor() {
 		return this.equippedArmor;
 	}
-// sets equippedWeapon to given item
+	// sets equippedWeapon to given item
 	public void setEquippedWeapon(Item i) {
 		this.equippedWeapon = i;
 	}
-// sets equippedArmor to given item
+	// sets equippedArmor to given item
 	public void setEquippedArmor(Item i) {
 		this.equippedArmor = i;
 	}
-// returns list of items in inventory
+	// returns list of items in inventory
 	public ArrayList<Item> getItems() {
 		return this.items;
 	}
 
+	// saves items of the inventory as well as other information
 	public void save(PrintWriter out) {
 	
 		out.println(maxWeight);

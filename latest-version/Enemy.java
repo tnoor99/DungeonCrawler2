@@ -85,7 +85,8 @@ public class Enemy {
     	public void setLocY(int newLocY) {
 		this.locY = newLocY;
 	}
-
+	
+	//saves enemy's health/stats/information
 	public void save(PrintWriter out, Boolean last) {
 		out.println(name);
 		out.println(health);
