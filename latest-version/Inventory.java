@@ -115,9 +115,9 @@ class Inventory {
 			count++;
 		}
 	
-		int eq = Integer.parseInt(Terminal.getLine("\n>"))-1;
+		int eq = Integer.parseInt(Terminal.getLine(">"))-1;
 		equippedWeapon = weapons.get(eq);
-		System.out.print("\n\rYou have eqquiped: " + weapons.get(eq) + "\n\r");		
+		System.out.print("\n\n\rYou have eqquiped: " + weapons.get(eq) + "\n\r");		
 		Terminal.getLine("\nHit enter to continue... >");
 
 	}
@@ -145,9 +145,9 @@ class Inventory {
 			count++;
 		}
 
-		int eq = Integer.parseInt(Terminal.getLine("\n>"))-1;
+		int eq = Integer.parseInt(Terminal.getLine(">"))-1;
 		equippedArmor = armors.get(eq);
-		System.out.print("\nYou have eqquiped: " + armors.get(eq) + "\n\r");
+		System.out.print("\n\n\rYou have eqquiped: " + armors.get(eq) + "\n\r");
 		Terminal.getLine("\nHit enter to continue... >");
 
 	}

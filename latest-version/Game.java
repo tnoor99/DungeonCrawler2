@@ -119,6 +119,7 @@ and then updates the world and entities accordingly */
 					Terminal.getLine("\nHit enter to continue... >");
 					break;
 				case c: // change equipped weapon or armor
+					Terminal.clear();
 					String choice = Terminal.getLine("Would you like to equip a new weapon (1) or armor (2)? >");
 					if (choice.equals("1")) {
 						p.getInv().equipWeapon();
@@ -134,7 +135,7 @@ and then updates the world and entities accordingly */
 					loadGame();
 					break;
 
-				case w:
+				case w: // warp to different room if standing on portal
 					if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("1")) {
 						theMap.setCurrentRoom(0);
 					} else if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("2")) {
@@ -143,7 +144,40 @@ and then updates the world and entities accordingly */
 						theMap.setCurrentRoom(2);
 					}
 					break;
+				
+				case d: // drop item (only if item is not equipped)
+					Terminal.clear();
+					p.getInv().print();
+					String dropChoiceString = Terminal.getLine("Which item would you like to drop? >");
+					int dropChoice = Integer.parseInt(dropChoiceString);
+					System.out.println("\r");
+					if ((p.getInv().getItems().get(dropChoice-1).getName()).equals(p.getInv().getEquippedWeapon().getName())) {
+						System.out.println("You can't drop this weapon... You have it equipped!\n\rYou must find and equip another weapon first.\n\r");
+						Terminal.getLine("Hit enter to continue... >");
+						break;
+					} else if ((p.getInv().getItems().get(dropChoice-1).getName()).equals(p.getInv().getEquippedArmor().getName())) {
+						System.out.println("You can't drop this armor... You have it equipped!\n\rYou must find and equip another armor first.\n\r");
+						Terminal.getLine("Hit enter to continue... >");
+						break;
+					} 
+					
+					Boolean breakOut = false;
+					for (Item i : theMap.getCurrentRoom().getGroundItems()) {
+						if (p.getLocX() == i.getLocX() && p.getLocY() == i.getLocY()) {
+							System.out.println("You can't drop an item here... You're already standing on top of one!\n\r");
+							Terminal.getLine("Hit enter to continue... >");
+							breakOut = true;
+						}
+					}
+					if (breakOut) { break; }
 
+					p.getInv().getItems().get(dropChoice-1).setLocX(p.getLocX());
+					p.getInv().getItems().get(dropChoice-1).setLocY(p.getLocY());
+					theMap.getCurrentRoom().getGroundItems().add(p.getInv().getItems().get(dropChoice-1));
+					p.getInv().getItems().remove(dropChoice-1);
+					
+					Terminal.getLine("Hit enter to continue... >");
+					break;
 
 			}
 			

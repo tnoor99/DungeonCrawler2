@@ -37,13 +37,13 @@ public class Battle {
             		System.out.printf("%n%s hits you for %d damage.", e.getName(), e.getDamage()-p.getInv().getEquippedArmor().getStrength());
 			System.out.print("\n\r");
 			if (p.getHealth() < 0 && e.getHealth() < 0) {
-            			System.out.printf("%n3You now have 0 health. %s now has 0 health.", e.getName());
+            			System.out.printf("%nYou now have 0 health. %s now has 0 health.", e.getName());
 			} else if (p.getHealth() < 0) {
-            			System.out.printf("%n1You now have 0 health. %s now has %d health.", e.getName(), e.getHealth());
+            			System.out.printf("%nYou now have 0 health. %s now has %d health.", e.getName(), e.getHealth());
 			} else if (e.getHealth() < 0) {
-            			System.out.printf("%n2You now have %d health. %s now has 0 health.", p.getHealth(), e.getName());
+            			System.out.printf("%nYou now have %d health. %s now has 0 health.", p.getHealth(), e.getName());
 			} else {
-            			System.out.printf("%n4You now have %d health. %s now has %d health.", p.getHealth(), e.getName(), e.getHealth());
+            			System.out.printf("%nYou now have %d health. %s now has %d health.", p.getHealth(), e.getName(), e.getHealth());
 			}
 			System.out.print("\n\r");
 			Terminal.getLine("Hit enter to continue... >");
