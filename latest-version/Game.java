@@ -28,8 +28,8 @@ public class Game {
 		//e1.setAlive(false);
 		//e2.setAlive(false);
 		//groundItem1 = new Item(ItemType.Other, "Test", 0, 0, 0, 7, 7);
-		p.getInv().add(new Item(ItemType.Weapon, "Bow", 5, 5, 10, -1, -1));
-		p.getInv().add(new Item(ItemType.Armor, "Leather Chestplate", 3, 5, 3, -1, -1));
+		p.getInv().add(new Item(ItemType.Weapon, "Bow", 10, 5, 10, -1, -1));
+		p.getInv().add(new Item(ItemType.Armor, "Leather Armor Set", 20, 5, 3, -1, -1));
 		p.getInv().setEquippedWeapon(p.getInv().getItems().get(0));
 		p.getInv().setEquippedArmor(p.getInv().getItems().get(1));
 	}
@@ -113,11 +113,13 @@ and then updates the world and entities accordingly */
 							pickUp = Terminal.getLine("Do you want to pick it up? (y/n) >");
 							if (pickUp.equals("y") || pickUp.equals("Y")) {
 								if (p.getInv().add(i)) {
-									System.out.print("\n\n\rYou picked up the item.");
+									System.out.println("\n\rYou picked up the item.");
+									Terminal.getLine("\n\rHit enter to continue... >");
 									theMap.getCurrentRoom().getGroundItems().remove(count);
 									break;
 								} else {
-									System.out.print("\n\n\rThe item was too heavy to pick up.");
+									System.out.println("\n\rThe item was too heavy to pick up.\n\rTry dropping some items first.");
+									Terminal.getLine("\n\rHit enter to continue... >");
 									break;
 								}
 							}
@@ -150,10 +152,13 @@ and then updates the world and entities accordingly */
 				case w: // warp to different room if standing on portal
 					if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("1")) {
 						theMap.setCurrentRoom(0);
+						loading = true;
 					} else if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("2")) {
 						theMap.setCurrentRoom(1);
+						loading = true;
 					} else if (Character.toString(theMap.getCurrentRoom().getGrid().get(p.getLocY()).charAt(p.getLocX())).equals("3")) {
 						theMap.setCurrentRoom(2);
+						loading = true;
 					}
 					break;
 				

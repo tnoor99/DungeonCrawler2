@@ -156,11 +156,12 @@ public class Room {
 	public ArrayList<Enemy> getEnemiesType(int type) {
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 		if (type == 1) {
-			enemies.add(new Enemy("Otmin Minotaur", 70, 15, 4, 4));
+			enemies.add(new Enemy("Otmin Minotaur", 40, 10, 4, 4));
 		} else if (type == 2) {
-			enemies.add(new Enemy("Prince Caspian", 90, 25, 15, 10));
-			enemies.add(new Enemy("The White Witch", 150, 55, 15, 11));
+			enemies.add(new Enemy("Prince Caspian", 60, 20, 15, 10));
+			//enemies.add(new Enemy("The White Witch", 150, 55, 15, 11));
 		} else {
+			enemies.add(new Enemy("The White Witch", 120, 35, 10, 7));
 			//enemies.add(new Enemy("eType3", 50, 5, 10, 7));
 		}
 		return enemies;
@@ -169,11 +170,13 @@ public class Room {
 	public ArrayList<Item> getGroundItemsType(int type) {
 		ArrayList<Item> groundItems = new ArrayList<Item>();
 		if (type == 1) {
-			groundItems.add(new Item(ItemType.Weapon, "Lucy's dagger", 15, 20, 15, 7, 2));
+			groundItems.add(new Item(ItemType.Weapon, "Lucy's dagger", 10, 20, 15, 7, 2));
 		} else if (type == 2) {
-			groundItems.add(new Item(ItemType.Weapon, "Seven Swords", 25, 30, 40, 7, 11));
-			groundItems.add(new Item(ItemType.Weapon, "Jadis' Wand", 45, 40, 80, 7, 12));
+			groundItems.add(new Item(ItemType.Weapon, "Seven Swords", 20, 30, 40, 8, 11));
+			groundItems.add(new Item(ItemType.Armor, "Chainmail Armor Set", 50, 30, 10, 23, 11));
+			//groundItems.add(new Item(ItemType.Weapon, "Jadis' Wand", 45, 40, 80, 7, 12));
 		} else {
+			groundItems.add(new Item(ItemType.Weapon, "Jadis' Wand", 20, 40, 80, 6, 7));
 			//groundItems.add(new Item(ItemType.Other, "iType3", 0, 0, 0, 17, 7));
 		}
 		return groundItems;
