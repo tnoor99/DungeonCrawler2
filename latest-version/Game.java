@@ -42,8 +42,19 @@ and then updates the world and entities accordingly */
 		boolean running = true;
 		int move = 0;
 		printCommands();
+		boolean loading = false;
 		while (running) {
-			moveEnemies(theMap.getCurrentRoom().getEnemies());
+			if (theMap.checkAllEnemiesDead()) {
+				Terminal.clear();
+				System.out.println("Congratulations, you've killed every enemy and beaten the game!\r");
+				System.out.println("Thanks for playing!\n\r");
+				Terminal.cookedMode();
+				System.exit(1);
+			}
+			
+			if (!loading) {
+				moveEnemies(theMap.getCurrentRoom().getEnemies());
+			} else { loading = false; }
 
 			battleChecker(theMap.getCurrentRoom().getEnemies(), p.getLocX(), p.getLocY());
 
@@ -133,6 +144,7 @@ and then updates the world and entities accordingly */
 					break;
 				case l: // load game
 					loadGame();
+					loading = true;
 					break;
 
 				case w: // warp to different room if standing on portal
@@ -231,6 +243,7 @@ and then updates the world and entities accordingly */
 		System.out.print("RIGHT ARROW : move right\n\r");
 		System.out.print("I : view inventory\n\r");
 		System.out.print("P : inspect an item beneath you\n\r");
+		System.out.print("D : drop an item\n\r");
 		System.out.print("C : change equipped weapon or armor\n\r");
 		System.out.print("W : take the warp you are standing on\n\r");
 		System.out.print("S : save the game\n\r");

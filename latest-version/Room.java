@@ -79,6 +79,14 @@ public class Room {
 		return groundItems;
 	}
 
+	public boolean checkEnemiesDead() {
+		boolean allDead = true;
+		for (Enemy e : enemies) {
+			if (e.getAlive()) { allDead = false; }
+		}
+		return allDead;
+	}
+
 	public ArrayList<String> getGridType(int type) {
 		ArrayList<String> grid = new ArrayList<String>();
 		if (type == 1) {

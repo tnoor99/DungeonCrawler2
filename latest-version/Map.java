@@ -46,6 +46,14 @@ public class Map {
 		currentRoom = r;
 	}
 
+	public boolean checkAllEnemiesDead() {
+		boolean allDead = true;
+		for (Room r : rooms) {
+			if(!r.checkEnemiesDead()) { allDead = false; }
+		}
+		return allDead;
+	}
+
 }
 
 
