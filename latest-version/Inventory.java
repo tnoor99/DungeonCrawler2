@@ -7,7 +7,7 @@ import java.io.PrintWriter;
  * This method handles the players inventory, storing values and objects, and modifying these values and objects when prompted. It includes a
  * list of items that the inventory is holding, a max weight that can be carried, and the items currently equipped.
  */
-class Inventory {
+public class Inventory {
 
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private int maxWeight;
