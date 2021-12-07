@@ -1,7 +1,12 @@
-
-//for every player created in both Game.java and Main.java, it takes a string name as a parameter, creates a new personal inventory for said player, sets its inital state to be alive (true), and initializes its health to 100.
 import java.io.PrintWriter;
 import java.util.Scanner;
+
+/**
+ * this class, for every player created in both Game.java and Main.java, takes a string name as a parameter,
+ * creates a new personal inventory for said player, sets its inital state to be alive (true),
+ * initializes its health to 100, and saves the player's information and stats.
+ *
+ */
 
 public class Player {
     private String name;
@@ -13,103 +18,191 @@ public class Player {
     private int locX;
     private int locY;
 
+    /**
+     * instantiates what is needed for the player in the game, creates an inventory
+     * for the player, sets the state of the player to be alive,
+     * and sets the health to 100.
+     *
+     * @param n, string that is for the name of the player
+     */
+
     public Player(String n) {
         this.name = n;
 	this.playerInventory = new Inventory(100);
 	this.alive = true;
 	this.health = 100;
     }
+   
+   /**
+    * this method loads the constructor for player information.
+    *
+    * @param in, Scanner takes in the data to the file that stores player information
+    */
+   
+    public Player(Scanner in) {
+	    name = in.nextLine();
+	    health = in.nextInt();
+	    in.nextLine();
+	    damage = in.nextInt();
+	    in.nextLine();
+	    armor = in.nextInt();
+	    in.nextLine();
+	    alive = in.nextBoolean();
+	    in.nextLine();
+	    locX = in.nextInt();
+	    in.nextLine();
+	    locY = in.nextInt();
+	    in.nextLine();
+	    playerInventory = new Inventory(in);
+    }
 
-    //load in constructor for player information
-    	public Player(Scanner in) {
-		name = in.nextLine();
-		health = in.nextInt();
-		in.nextLine();
-		damage = in.nextInt();
-		in.nextLine();
-		armor = in.nextInt();
-		in.nextLine();
-		alive = in.nextBoolean();
-		in.nextLine();
-		locX = in.nextInt();
-		in.nextLine();
-		locY = in.nextInt();
-		in.nextLine();
-		playerInventory = new Inventory(in);
-	}
+    /**
+     * this method returns the name of the player
+     *
+     * @return player name
+     */
 
-
-    //returns player's name
     public String getName() {
         return this.name;
     }
 
-    //returns player's health stat
+    /**
+     * returns the player's health status
+     *
+     * @return player health
+     */
+
     public int getHealth() {
         return this.health;
     }
 
-    //returns int that represents equipped weapon's strength value
+    /**
+     * this method returns int that represents the damage of the weapon
+     *
+     * @return damage of the weapon
+     */
+
     public int getDamage() {
         return this.damage;
     }
 
-    //returns int that represents equipped armor's strength value
+    /**
+     * this method returns int that represents equipped armor's strength value
+     *
+     * @return strength value of armor
+     */
+
     public int getArmor() {
         return this.armor;
     }
 
-    //allows for access to player's inventory 
+    /**
+     * allows for access to player's inventory 
+     *
+     * @return player's inventory
+     */
+ 
     public Inventory getInv() {
         return this.playerInventory;
     }
 
-    //returns player's state of being either dead or alive
+    /**
+     * returns the player's state of being either dead or alive
+     *
+     * @return if player is alive or dead
+     */
+
     public Boolean getAlive() {
         return this.alive;
     }
 
-    //returns player's x coordinate
+    /**
+     * this method returns the x coordinate of the player
+     *
+     * @return x coordinate of player
+     */
+
     public int getLocX() {
         return this.locX;
     }
 
-    //returns player's y coordinate
+    /**
+     * this method returns the y coordinate of the player
+     *
+     * @return y coordinate of player
+     */
+
     public int getLocY() {
         return this.locY;
     }
 
-    //in battle it sets the player's health stats after attacks
+    /**
+     * this method while in battle sets the player's health stats after attacks
+     *
+     * @param newHealth int that holds the new health after attacks
+     */
+
     public void setHealth(int newHealth) {
         this.health = newHealth;
     }
 
-    //sets damage
+    /**
+     * this methods sets the damage
+     *
+     * @param newDamage int that holds the damage once attack has occured
+     */
+
     public void setDamage(int newDamage) {
         this.damage = newDamage;
     }
 
-    //sets armor 
+
+    /**
+     * this method sets the armor
+     *
+     * @param newArmor int that has any newly equipped armor
+     */
+
     public void setArmor(int newArmor) {
         this.armor = newArmor;
     }
 
-    //sets if player is either dead or alive
-    public void setAlive(Boolean newAlive) {
+    /**
+     * this methods sets thhe state of the player, whether it's alive or not
+     *
+     * @param newAlive boolean
+     */
+
+     public void setAlive(Boolean newAlive) {
         this.alive = newAlive;
     }
 
-    //sets player's x coordinate
+    /**
+     * sets the player's x coordinate
+     *
+     * @param newLocX int
+     */
+
     public void setLocX(int newLocX) {
         this.locX = newLocX;
     }
 
-    //sets player's y coordinate
+    /**
+     * sets player's y coordinate/**
+     * 
+     * @param newLocY int
+     */
+
     public void setLocY(int newLocY) {
         this.locY = newLocY;
     }
 
-    //saves a player's information/stats
+    /**
+     * this method saves a player's information/stats
+     *
+     * @param out, PrintWriter that links to the file which stores the player's information/stats
+     */
+
     public void save(PrintWriter out) {
 	    out.println(name);
 	    out.println(health);
