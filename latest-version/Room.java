@@ -2,18 +2,31 @@ import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ * This class handles the components of a single room, including layout, enemies, and items.
+ */
+
 public class Room {
 
 	private ArrayList<String> grid;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Item> groundItems;
-
+/**
+ * This method constructs one of three set types of rooms.
+ *
+ * @param type Int designating which type of room to construct. Needs to be either 1, 2, or 3.
+ */
 	public Room(int type) {
 		this.grid = getGridType(type);
 		this.enemies = getEnemiesType(type);
 		this.groundItems = getGroundItemsType(type);
 	}
-
+/**
+ * This method constructs a room based on data stored in a save file.
+ *
+ * @param type Int designating which type of room to construct. Needs to be either 1, 2, or 3.
+ * @param in Scanner linked to the file storing the saved room's data.
+ */
 	public Room(int type, Scanner in) {
 		this.grid = getGridType(type);
 		this.enemies = new ArrayList<Enemy>();
@@ -41,7 +54,12 @@ public class Room {
 			}
 		}
 	}
-
+/**
+ * This method saves the room's values to a file so that it can be loaded later on.
+ *
+ * @param out PrintWriter which is linked to the file where the room's values are to be stored.
+ * @param currentRoom Int designating the room the player is currently in. Needs to be either 1, 2, or 3.
+ */
 	public void save(PrintWriter out, int currentRoom) {
 		out.println(currentRoom);
 		if (groundItems.size() > 0) {
@@ -66,19 +84,35 @@ public class Room {
 			}
 		} else { out.println("XXXXX"); }
 	    }
-
+/**
+ * This method returns the room's grid, which is an ArrayList of Strings storing the room's physical layout.
+ *
+ * @return Returns ArrayList<String> containing room's layout.
+ */
 	public ArrayList<String> getGrid() {
 		return grid;
 	}
-
+/**
+ * This method returns the list containing the room's enemies.
+ *
+ * @return Returns ArrayList<Enemy> containing all of the enemies in the room.
+ */
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
-
+/**
+ * This method returns the list containing all the items on the ground in the room.
+ *
+ * @return Returns ArrayList<Item> containing the items currently on the ground in the room.
+ */
 	public ArrayList<Item> getGroundItems() {
 		return groundItems;
 	}
-
+/**
+ * This method checks if there are any living enemies remaining in the room.
+ *
+ * @return Returns boolean: true if all enemies in the room are dead, and false if not.
+ */
 	public boolean checkEnemiesDead() {
 		boolean allDead = true;
 		for (Enemy e : enemies) {
@@ -86,7 +120,13 @@ public class Room {
 		}
 		return allDead;
 	}
-
+/**
+ * This method stores and returns one of three room layouts. This is used when constructing on of the three
+ * default layouts.
+ *
+ * @param type Int designating desired room layout type. Needs to be either 1, 2, or 3.
+ * @return Returns ArrayList<String> containing the layout of the specified room type.
+ */
 	public ArrayList<String> getGridType(int type) {
 		ArrayList<String> grid = new ArrayList<String>();
 		if (type == 1) {
@@ -152,7 +192,12 @@ public class Room {
 		}
 		return grid;
 	}
-
+/**
+ * This method stores and returns one of three default room enemy configurations.
+ *
+ * @param type Int designating the desired room enemy configuration. Needs to be either 1, 2, or 3.
+ * @return Returns ArrayList<Enemy> contaning the enemies of the specified room type.
+ */
 	public ArrayList<Enemy> getEnemiesType(int type) {
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 		if (type == 1) {
@@ -166,7 +211,12 @@ public class Room {
 		}
 		return enemies;
 	}
-
+/**
+ * This method stores and returns one of three default room item configurations.
+ *
+ * @param type Int designating the desired room item configuration. Needs to be either 1, 2, or 3.
+ * @return Returns ArrayList<Item> containing the items of the specified room type.
+ */
 	public ArrayList<Item> getGroundItemsType(int type) {
 		ArrayList<Item> groundItems = new ArrayList<Item>();
 		if (type == 1) {

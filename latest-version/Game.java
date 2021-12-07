@@ -6,9 +6,10 @@ import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/* This class handles the major functions of the game, such as creating entities and updating their locations,
-handling player input, printing the map, printing commands. */
-
+/**
+ * This class handles the major functions of the game, such as printing game commands, printing the current world, moving/updating entities, processing player input,
+ * starting battles, and directing game save and load processes.
+ */
 public class Game {
 
 	private Map theMap;
@@ -18,6 +19,11 @@ public class Game {
 	//private Item groundItem1;
 
 // instantiates all entities that will be present in the game
+/**
+ * This method instantiates all the objects needed to start the game.
+ * 
+ * @param name String designating the player's choice of name.
+ */
 	public Game(String name) {
 		theMap = new Map();
 		p = new Player(name);
@@ -35,8 +41,10 @@ public class Game {
 	}
 
 
-/* startGame is where the game loop is, which prints the current world along with it's entities, waits for player input,
-and then updates the world and entities accordingly */
+/**
+ * This method prints game commands and then begins a loop which runs the game. Each iteration of the loop will prompt the player for input
+ * and update the world and its entities accordingly. It will also start battles or end the game if conditions for such are met.
+ */
 	public void startGame() {
 
 		boolean running = true;
@@ -203,7 +211,9 @@ and then updates the world and entities accordingly */
 		Terminal.cookedMode();
 	}
 
-// prints the game's map along with entities that are currently on it
+/**
+ * This method prints the current room along with the player and any enemies, items, or warp points in the room.
+ */
 	public void printWorld() {
 		Terminal.clear();
 		char pixel;
@@ -237,7 +247,9 @@ and then updates the world and entities accordingly */
 	
 	}
 
-// prints the commands the player has to choose from
+/**
+ * This method prints the commands the player has to choose from.
+ */
 	public void printCommands() {
 		Terminal.clear();
 		System.out.print("***COMMANDS***\n\n\r");
@@ -258,7 +270,11 @@ and then updates the world and entities accordingly */
 		Terminal.getLine("Hit enter to continue... >");
 	}
 
-// updates the positions of all living enemies - enemy movement is determined by a random number generator
+/**
+ * This method updates the positions of all living enemies in the current room. Enemy movements are random.
+ *
+ * @param enemies ArrayList<Enemy> containing list of enemies that are to be moved.
+ */
 	public void moveEnemies(ArrayList<Enemy> enemies) {
 		Random rand = new Random();
 		int move;
@@ -292,7 +308,9 @@ and then updates the world and entities accordingly */
 
 
 
-
+/**
+ * This method directs the game's save process, writing relevant data to a series of files which are read when a saved game is loaded.
+ */
 	public void saveGame() {
 		PrintWriter outpf = null;
 		PrintWriter outr1 = null;
@@ -326,7 +344,9 @@ and then updates the world and entities accordingly */
 
 	}
 
-
+/**
+ * This method directs the game's loading process, reading from a series of files in order to reconstruct a saved game.
+ */
 	public void loadGame() {
 		Scanner inP = null;
 		Scanner inR1 = null;
@@ -359,7 +379,14 @@ and then updates the world and entities accordingly */
 
 
 
-
+/**
+ * This method checks whether a battle is to be started with an enemy.
+ * 
+ * @param enemies ArrayList<Enemy> containing the enemies of the current room.
+ * @param locX Int designating the player's x coordinate on the map.
+ * @param locY Int designating the player's y coordinate on the map.
+ * @return Returns boolean true if a battle is to be started (if player and enemy are at same location), and false otherwise.
+ */
 	public Boolean battleChecker(ArrayList<Enemy> enemies, int locX, int locY) {
 		Battle b = new Battle();
 		for (Enemy e : enemies) {
@@ -370,7 +397,14 @@ and then updates the world and entities accordingly */
 		}
 		return false;
 	}
-
+/**
+ * This method checks whether there is an enemy standing at a given location.
+ *
+ * @param enemies ArrayList<Enemy> containing the enemies that are to be checked.
+ * @param locX Int designating the x coordinate of the location being checked.
+ * @param locY Int designating the y coordinate of the location being checked.
+ * @return Returns boolean true if there is an enemy standing at the given location, and false otherwise.
+ */
 	public Boolean isEnemyHere(ArrayList<Enemy> enemies, int locX, int locY) {
 		for (Enemy e : enemies) {
 			if (locX == e.getLocX() && locY == e.getLocY()) {

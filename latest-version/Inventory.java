@@ -3,9 +3,10 @@ import java.util.Scanner;
 import ansi_terminal.*;
 import java.io.PrintWriter;
 
-/* This class will house an ArrayList of Items, as well as a series of methods for altering the state of this ArrayList. Other methods include
-   a method to print the contents of the ArrayList in an easily readable format, and equip methods to equip specific item types.*/
-
+/**
+ * This method handles the players inventory, storing values and objects, and modifying these values and objects when prompted. It includes a
+ * list of items that the inventory is holding, a max weight that can be carried, and the items currently equipped.
+ */
 class Inventory {
 
 	private ArrayList<Item> items = new ArrayList<Item>();
@@ -16,12 +17,20 @@ class Inventory {
 	private Scanner enterScnr = new Scanner(System.in);
 	private Scanner in = new Scanner(System.in);
 
-	// Constructs an Inventory with a given weight limit.
+/**
+ * This method constructs an Inventory with a given weight limit.
+ *
+ * @param maxWeigth Int designating the max weight limit of the inventory.
+ */
 	public Inventory(int maxWeight) {
 		this.maxWeight = maxWeight;
 	}
 
-	//load constructor for a player's inventory items/information
+/**
+ * This method constructs an Inventory according to the values and items stored in a provided save file.
+ *
+ * @param in Scanner which is connected to the file storing the saved inventory.
+ */
 	public Inventory(Scanner in) {
 		maxWeight = in.nextInt();
 		in.nextLine();
@@ -43,8 +52,13 @@ class Inventory {
 		in.close();
 	}
 
-	/* Checks if a given item being added would excede weight limit. If so, item will not be added and the method will return false.
-	   Otherwise, the item will be added to the items ArrayList, and the method will return true. */
+/**
+ * This method adds a provided item to the inventory. However, if adding the item would cause the total weight of the inventory to exceed
+ * the max weight of the inventory, the item will not be added.
+ *
+ * @param item Item that is to be added.
+ * @return Returns boolean true if the item was successfully added, and false otherwise.
+ */
 	public boolean add(Item item) {
 		if (item.getWeight() > (this.maxWeight - this.totalWeight())) {
 			return false;
@@ -53,7 +67,11 @@ class Inventory {
 		return true;
 	}
 
-	// Calculates combined weight of every Item in items ArrayList and returns this sum
+/**
+ * This method calculates the combined weight of every item in the inventory.
+ *
+ * @return Returns int designating the total weight of the inventory.
+ */
 	public int totalWeight() {
 		int sum = 0;
 		for (Item item : items) {
@@ -62,7 +80,9 @@ class Inventory {
 		return sum;
 	}
 
-	// Prints every Item in items ArrayList in order. If items is empty, will print a message informing the user that the inventory is empty.
+/**
+ * This method prints the inventory's contents in an easily readable format. If the inventory is empty, a message will be printed saying so.
+ */
 	public void print() {
 		if (items.size() == 0) {
 			System.out.println("...There's nothing in your inventory...This is awkward...\r");
@@ -78,7 +98,9 @@ class Inventory {
 		}
 	}
 
-	// Prompts the user for which Item they would like to drop, and removes the specified Item from items ArrayList.
+/**
+ * This displays the inventory's contents and prompts the user to select an item to drop, and removes said item from the inventory.
+ */
 	public void drop() {
 		System.out.println("\nWhich item would you like to drop?\n");
 		this.print();
@@ -92,8 +114,9 @@ class Inventory {
 
 	}
 
-	/* Prints a list of every Item of ItemType Weapon. If there are no weapons, tells user such and returns. Otherwise prompts the user for
-	   which Item they would like to equip, and sets eqquipedWeapon to the specified Item. */
+/**
+ * This method prints a list of every weapon in the inventory. It then asks prompts the user to select a weapon to equip, and sets EquippedWeapon to the selected weapon.
+ */
 	public void equipWeapon() {	
 		ArrayList<Item> weapons = new ArrayList<Item>();
 		for (Item i : items) {
@@ -122,8 +145,9 @@ class Inventory {
 
 	}
 
-	/* Prints a list of every Item of ItemType Armor. Prompts the user for which Item they would like to equip, and sets eqquipedArmor to
-	the specified Item */
+/**
+ * This method prints a list of every armor in the inventory. It then asks prompts the user to select a armor to equip, and sets EquippedArmor to the selected armor.
+ */
 	public void equipArmor() {
 		ArrayList<Item> armors = new ArrayList<Item>();
 		for (Item i : items) {
@@ -151,28 +175,57 @@ class Inventory {
 		Terminal.getLine("\nHit enter to continue... >");
 
 	}
-	// returns equippedWeapon
+
+/**
+ * This method returns the currently equipped weapon.
+ *
+ * @return Returns Item which is the weapon equipped.
+ */
 	public Item getEquippedWeapon() {
 		return this.equippedWeapon;
 	}
-	// returns equippedArmor
+
+/**
+ * This method return the currently equipped armor.
+ *
+ * @return Returns Item which is the armor equipped.
+ */
 	public Item getEquippedArmor() {
 		return this.equippedArmor;
 	}
-	// sets equippedWeapon to given item
+
+/**
+ * This method updats the equipped weapon to a given item.
+ *
+ * @param i Item to be equipped.
+ */
 	public void setEquippedWeapon(Item i) {
 		this.equippedWeapon = i;
 	}
-	// sets equippedArmor to given item
+
+/**
+ * This method updates tho equipped armor to a given item.
+ *
+ * @param i Item to be equipped.
+ */
 	public void setEquippedArmor(Item i) {
 		this.equippedArmor = i;
 	}
-	// returns list of items in inventory
+
+/**
+ * This method returns the list of items in the inventory.
+ *
+ * @return Returns ArrayList<Item> containing items in the inventory.
+ */
 	public ArrayList<Item> getItems() {
 		return this.items;
 	}
 
-	// saves items of the inventory as well as other information
+/**
+ * This method saves the contents of the inventory to a given save file.
+ *
+ * @param out PrintWriter connected to the save file that is to be written to.
+ */
 	public void save(PrintWriter out) {
 	
 		out.println(maxWeight);
