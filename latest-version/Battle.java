@@ -2,12 +2,21 @@ import ansi_terminal.*;
 //upon running into an enemy in the dungeon, this class is evoked in the Game.java class where it readies the player for battle. The startBattle() method gets the strength of the equipped weapon from the inventory and uses an if/else 
 //statement to send the player into the round() method. In there while the player and enemy are both alive the attacks begin and new health stats are calculated. If this.Round(p, e) returns true that means the player killed the enemy because
 //its health stat was less than 1. If it returns false that means the player died. 
+
+/**
+ * This class handles battles between the player and enemies.
+ */
 public class Battle {
 
 	public Battle() {
-
+		//
 	}
-
+	/**
+	 * Gets the strength of the equipped weapon and armor from the inventory before sending the player into battle/round().
+	 *
+	 * @param p the player entering the battle.
+	 * @param e the enemy that is being fought.
+	 */
 	 public void startBattle(Player p, Enemy e) {
 	 	Terminal.clear();
 		p.getInv().getEquippedWeapon();
@@ -27,7 +36,11 @@ public class Battle {
     
     	}	
     
-
+	/**
+	 * While the player and enemy are both alive the attacks begin and new health stats are calculated.
+	 *
+	 * @return true if the player killed the enemy and its health stat was less than 0. Or return false if the player died.
+	 */
     	public boolean Round(Player p, Enemy e) {
         	while(p.getAlive() && e.getAlive()) {
             		e.setHealth(e.getHealth() - p.getDamage()); //calculating enemy's health
