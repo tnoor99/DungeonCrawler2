@@ -1,7 +1,10 @@
 import java.util.Random;
 
-/* This class creates a random set of values that can be used to create a new Item. It consits of a constructor which creates arrays of the different
-possible item names, and the generate method which uses a random number generator to select a random set of values. */
+
+/**
+ * This class creates a random set of values that can be used to create a new Item. It consits of a constructor which creates arrays of the
+ * different possible item names, and the generate method which uses a random number generator to select a random set of values.
+ */
 public class ItemGenerator {
 	
 	private static String[] armors = new String[12];
@@ -9,7 +12,9 @@ public class ItemGenerator {
 	private static String[] others = new String[20];
 	private static String[] adjectives = new String[12];
 
-// Creates all the different name possibilities.
+/**
+ * Creates all the different name possibilities for armors, weapons, and others.
+ */
 	public ItemGenerator() {
 		
 		armors[0] = "Space Helmet";
@@ -62,7 +67,11 @@ public class ItemGenerator {
 		adjectives[11] = "Haunted";
 	}
 
-// Uses a random number generator to return a set of randomly selected item values. Item types and names are ensured to be alligned.
+	/**
+	 * Uses a random number generator to return a set of randomly selected item values. Item types and names are ensured to be alligned.
+	 *
+	 * @return Item which is generated.
+	 */
 	public static Item generate() {
 		Random rand = new Random();
 		int typeNum = rand.nextInt(5);

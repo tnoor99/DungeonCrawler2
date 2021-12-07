@@ -1,5 +1,6 @@
-
-// This is an enumerator representing the 3 possible types an item could fall under
+/**
+ * This enum represents the different possible types of items. Either Weapon, Armor, or Other.
+ */
 public enum ItemType {
 	Weapon,
 	Armor,
